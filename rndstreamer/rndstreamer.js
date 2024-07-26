@@ -80,6 +80,11 @@ function get_strings() {
 setInterval(get_strings, 5000);
 
 http.createServer(function(request, response) {
+    if (path.normalize(decodeURI(uri)) !== decodeURI(uri)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
         const uri = url.parse(request.url).pathname;
 let timeout;
   if (uri === "/stream") {
